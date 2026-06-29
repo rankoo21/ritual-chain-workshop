@@ -1,5 +1,5 @@
 import type { Address } from "viem";
-import aiJudgeAbi from "@/abi/AIJudge";
+import commitRevealAbi from "@/abi/CommitRevealBounty";
 
 /**
  * Central place for the on-chain config the UI needs.
@@ -7,7 +7,7 @@ import aiJudgeAbi from "@/abi/AIJudge";
  * pointed at different Ritual deployments without code changes.
  */
 
-export const aiJudgeAbiConst = aiJudgeAbi;
+export const bountyAbi = commitRevealAbi;
 
 const rawAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim();
 

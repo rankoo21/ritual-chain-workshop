@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import aiJudgeAbi from "@/abi/AIJudge";
+import bountyAbi from "@/abi/CommitRevealBounty";
 import { contractAddress } from "@/config/contract";
 import { ritualChain } from "@/config/wagmi";
 import type { Bounty } from "@/lib/bounty";
@@ -58,10 +58,11 @@ export function FinalizeWinner({
     try {
       await tx.run({
         address: contractAddress,
-        abi: aiJudgeAbi,
+        abi: bountyAbi,
         functionName: "finalizeWinner",
         args: [bountyId, BigInt(idxNum)],
         chainId: ritualChain.id,
+        gas: 200000n,
       });
     } catch {
       /* surfaced via tx.state */

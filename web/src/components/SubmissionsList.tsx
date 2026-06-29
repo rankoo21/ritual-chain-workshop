@@ -1,7 +1,7 @@
 "use client";
 
 import { useReadContract } from "wagmi";
-import aiJudgeAbi from "@/abi/AIJudge";
+import bountyAbi from "@/abi/CommitRevealBounty";
 import { contractAddress } from "@/config/contract";
 import { ritualChain } from "@/config/wagmi";
 import { shortenAddress } from "@/lib/format";
@@ -63,7 +63,7 @@ function SubmissionRow({
 }) {
   const { data, isLoading } = useReadContract({
     address: contractAddress,
-    abi: aiJudgeAbi,
+    abi: bountyAbi,
     functionName: "getSubmission",
     args: [bountyId, BigInt(index)],
     chainId: ritualChain.id,
@@ -71,7 +71,8 @@ function SubmissionRow({
   });
 
   const submitter = data?.[0];
-  const answer = data?.[1];
+  const revealed = data?.[2];
+  const answer = data?.[3];
 
   return (
     <div
@@ -101,7 +102,11 @@ function SubmissionRow({
       </div>
 
       <p className="mt-2 whitespace-pre-wrap break-words text-sm text-zinc-200">
-        {answer ?? (isLoading ? "" : "-")}
+        {revealed
+          ? (answer ?? "")
+          : isLoading
+            ? ""
+            : "🔒 sealed — not revealed yet"}
       </p>
 
       {ranking?.reason ? (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useReadContract } from "wagmi";
-import aiJudgeAbi from "@/abi/AIJudge";
+import bountyAbi from "@/abi/CommitRevealBounty";
 import { contractAddress, isContractConfigured } from "@/config/contract";
 import { ritualChain } from "@/config/wagmi";
 import { parseBounty, type Bounty } from "@/lib/bounty";
@@ -12,7 +12,7 @@ export function useBounty(bountyId?: bigint) {
 
   const query = useReadContract({
     address: contractAddress,
-    abi: aiJudgeAbi,
+    abi: bountyAbi,
     functionName: "getBounty",
     args: bountyId !== undefined ? [bountyId] : undefined,
     chainId: ritualChain.id,
